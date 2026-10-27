@@ -287,6 +287,25 @@ section { padding-block: clamp(3.5rem, 8vw, 6rem); }
 .project:hover .arrow { transform: translate(2px, -2px); color: var(--hema); }
 .project p { color: var(--muted); font-size: .95rem; }
 @media (max-width: 760px) { .projects { grid-template-columns: 1fr; } }
+.featured { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3rem); margin-bottom: 1rem; padding: clamp(1.5rem, 4vw, 2.25rem); }
+.featured .copy { display: grid; gap: .9rem; align-content: start; }
+.featured h3 { font: 400 clamp(1.6rem, 3vw, 2.1rem)/1.1 var(--serif); letter-spacing: -.02em; }
+.featured p { color: var(--muted); }
+.badge { justify-self: start; font: 500 .72rem/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: .4rem .6rem; border-radius: 999px; background: var(--eosin-soft); color: var(--eosin); }
+.install { font: 500 .85rem/1 var(--mono); background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: .8rem .9rem; overflow-x: auto; white-space: nowrap; }
+.install span { color: var(--muted); user-select: none; }
+.evidence { display: grid; gap: .75rem; align-content: start; }
+.evidence .k { font: 500 .8rem/1.4 var(--mono); color: var(--muted); }
+.bars { display: grid; gap: .9rem; }
+.bar { display: grid; gap: .35rem; }
+.bar .lbl { display: flex; justify-content: space-between; gap: 1rem; font-size: .9rem; }
+.bar .lbl b { font: 400 1.35rem/1 var(--serif); }
+.bar .track { height: 10px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+.bar .fill { height: 100%; border-radius: inherit; background: var(--muted); }
+.bar.good .fill { background: var(--hema); min-width: 10px; }
+.bar.good .lbl b { color: var(--hema); }
+.evidence .note { font-size: .82rem; color: var(--muted); }
+@media (max-width: 860px) { .featured { grid-template-columns: 1fr; } }
 
 /* Toolkit */
 .toolkit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 3rem; }
@@ -422,7 +441,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
         <article class="card reveal">
           <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="8.5" y="14" width="7" height="7" rx="2"/><path d="M6.5 10v2h11v-2M12 12v2"/></svg></div>
           <h3>Multi-agent LLM systems</h3>
-          <p>Tool-using agents wired to real engineering data, such as Azure DevOps through MCP servers. Deterministic logic does the scoring; the LLM synthesizes and explains. Examples: PI-planning intelligence across SAFe backlogs, and a daily briefing agent for algorithm programs.</p>
+          <p>Tool-using agents wired to real engineering data, such as Azure DevOps through MCP servers. Deterministic logic does the scoring; the LLM synthesizes and explains. Examples: PI-planning intelligence across SAFe backlogs, and a daily briefing agent for algorithm programs. In the open, I'm building <a href="#projects">concordat</a>, which makes agents follow their protocols by construction.</p>
           <ul class="tags"><li>MCP</li><li>LangChain</li><li>Claude</li><li>OpenAI</li></ul>
         </article>
         <article class="card reveal">
@@ -565,6 +584,28 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
         <span class="eyebrow">Open source</span>
         <h2 id="proj-h">Selected <em>code</em>.</h2>
       </div>
+      <article class="card featured reveal" aria-labelledby="concordat-h">
+        <div class="copy">
+          <span class="badge">New · v0.0.2 on PyPI</span>
+          <h3 id="concordat-h">concordat</h3>
+          <p><strong style="color:var(--ink);font-weight:500">Typed sessions for AI agents.</strong> Rules like "never refund before verifying identity" usually live in a prompt and are hoped for. In concordat, an agent is a Python class whose interface is a protocol: the model is only offered the tools that are legal in the current state, budgets on tokens, tool calls and dollars hold across handoffs, and a subclass that skips its parent's safety steps is rejected when it's defined.</p>
+          <div class="install" aria-label="Install command"><span>$ </span>pip install "concordat[anthropic]"</div>
+          <ul class="tags"><li>Python</li><li>Session types</li><li>Claude</li><li>OpenAI</li><li>Apache-2.0</li></ul>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://github.com/miladsikaroudi/concordat" target="_blank" rel="noopener">View on GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+            <a class="btn" href="https://pypi.org/project/concordat/" target="_blank" rel="noopener">PyPI</a>
+          </div>
+        </div>
+        <figure class="evidence" style="margin:0">
+          <figcaption class="k">τ-bench airline · 128 task-runs with pushy simulated customers</figcaption>
+          <p style="font-size:.95rem">Changes made without the explicit "yes" the airline policy requires (Claude Haiku 5.5):</p>
+          <div class="bars">
+            <div class="bar"><div class="lbl"><span>Standard agent</span><b>50</b></div><div class="track"><div class="fill" style="width:100%"></div></div></div>
+            <div class="bar good"><div class="lbl"><span>concordat agent</span><b>0</b></div><div class="track"><div class="fill" style="width:0"></div></div></div>
+          </div>
+          <p class="note">With gpt-4.1 the standard agent made 26 such changes and concordat again made 0. <a href="https://github.com/miladsikaroudi/concordat/blob/main/bench/RESULTS.md" target="_blank" rel="noopener">Setup, limits and all runs</a>.</p>
+        </figure>
+      </article>
       <div class="projects">
         <a class="card project reveal" href="https://github.com/miladsikaroudi/ALFA" target="_blank" rel="noopener">
           <div class="top"><span class="lang" style="--c:#3572A5">Python</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
@@ -586,10 +627,10 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
           <h3>server-resource-auditor</h3>
           <p>A daily audit for shared GPU machines: monitors users and resource usage, enforces courtesy caps, finds stale files and unused Docker images, and writes team-ready reports.</p>
         </a>
-        <a class="card project reveal" href="https://github.com/miladsikaroudi/cpp-concurrency-examples" target="_blank" rel="noopener">
+        <a class="card project reveal" href="https://github.com/miladsikaroudi/cache-crunch" target="_blank" rel="noopener">
           <div class="top"><span class="lang" style="--c:#F34B7D">C++</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
-          <h3>cpp-concurrency-examples</h3>
-          <p>Worked examples of the concurrency features introduced in C++11 and C++14.</p>
+          <h3>cache-crunch</h3>
+          <p>Experiments in cache-friendly C++: loop reordering and transposed layouts for faster matrix multiplication, plus softmax and normalization kernels, each with tests and cache hit/miss comparisons.</p>
         </a>
         <a class="card project reveal" href="https://github.com/miladsikaroudi/forward-forward-cifar" target="_blank" rel="noopener">
           <div class="top"><span class="lang" style="--c:#3572A5">Python</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
