@@ -305,6 +305,10 @@ section { padding-block: clamp(3.5rem, 8vw, 6rem); }
 .bar.good .fill { background: var(--hema); min-width: 10px; }
 .bar.good .lbl b { color: var(--hema); }
 .evidence .note { font-size: .82rem; color: var(--muted); }
+.evidence .model { font: 500 .78rem/1.3 var(--mono); color: var(--ink); margin-top: .35rem; }
+.evidence .model:first-child { margin-top: 0; }
+.bar .lbl small { display: block; font: 400 .78rem/1.4 var(--mono); color: var(--muted); }
+.bar .lbl { align-items: flex-end; }
 @media (max-width: 860px) { .featured { grid-template-columns: 1fr; } }
 
 /* Toolkit */
@@ -586,7 +590,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
       </div>
       <article class="card featured reveal" aria-labelledby="concordat-h">
         <div class="copy">
-          <span class="badge">New · v0.0.2 on PyPI</span>
+          <span class="badge">New · v0.0.3 on PyPI</span>
           <h3 id="concordat-h">concordat</h3>
           <p><strong style="color:var(--ink);font-weight:500">Typed sessions for AI agents.</strong> Rules like "never refund before verifying identity" usually live in a prompt and are hoped for. In concordat, an agent is a Python class whose interface is a protocol: the model is only offered the tools that are legal in the current state, budgets on tokens, tool calls and dollars hold across handoffs, and a subclass that skips its parent's safety steps is rejected when it's defined.</p>
           <div class="install" aria-label="Install command"><span>$ </span>pip install "concordat[anthropic]"</div>
@@ -597,13 +601,17 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
           </div>
         </div>
         <figure class="evidence" style="margin:0">
-          <figcaption class="k">τ-bench airline · 128 task-runs with pushy simulated customers</figcaption>
-          <p style="font-size:.95rem">Changes made without the explicit "yes" the airline policy requires (Claude Haiku 5.5):</p>
+          <figcaption class="k">τ-bench airline · simulated customers who push the agent to skip confirmation</figcaption>
+          <p style="font-size:.95rem">Share of task-runs in which the agent changed a booking without the explicit "yes" the airline policy requires:</p>
           <div class="bars">
-            <div class="bar"><div class="lbl"><span>Standard agent</span><b>50</b></div><div class="track"><div class="fill" style="width:100%"></div></div></div>
-            <div class="bar good"><div class="lbl"><span>concordat agent</span><b>0</b></div><div class="track"><div class="fill" style="width:0"></div></div></div>
+            <p class="model">Claude Haiku 5.5 · 3 runs · 128 task&#8209;runs</p>
+            <div class="bar"><div class="lbl"><span>Standard agent <small>29 of 128 · 50 changes</small></span><b>23%</b></div><div class="track"><div class="fill" style="width:23%"></div></div></div>
+            <div class="bar good"><div class="lbl"><span>concordat agent <small>0 of 128</small></span><b>0%</b></div><div class="track"><div class="fill" style="width:0"></div></div></div>
+            <p class="model">gpt-4.1 · 1 run · 50 tasks</p>
+            <div class="bar"><div class="lbl"><span>Standard agent <small>13 of 50 · 26 changes</small></span><b>26%</b></div><div class="track"><div class="fill" style="width:26%"></div></div></div>
+            <div class="bar good"><div class="lbl"><span>concordat agent <small>0 of 50</small></span><b>0%</b></div><div class="track"><div class="fill" style="width:0"></div></div></div>
           </div>
-          <p class="note">With gpt-4.1 the standard agent made 26 such changes and concordat again made 0. <a href="https://github.com/miladsikaroudi/concordat/blob/main/bench/RESULTS.md" target="_blank" rel="noopener">Setup, limits and all runs</a>.</p>
+          <p class="note">The gpt-4.1 run used concordat's newer "ask again" behaviour; the Haiku runs predate it. <a href="https://github.com/miladsikaroudi/concordat/blob/main/bench/RESULTS.md" target="_blank" rel="noopener">Setup, limits and all runs</a>.</p>
         </figure>
       </article>
       <div class="projects">
